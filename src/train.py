@@ -43,6 +43,8 @@ for e in range(Config.num_epochs):
         optimiser.step()
         global_step += 1
 
+    # Evaluation
+
     if global_step % Config.eval_step == 0:
         model.eval()
         loss = 0
