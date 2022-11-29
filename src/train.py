@@ -11,13 +11,17 @@ DATA_PATH = "data/PSI_Biology_solubility_trainset.csv"
 SAVE_MODEL_PATH = "../models/"
 LOAD_MODEL_PATH = "../model.pth"
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 global_step = 0
 
 y, x = load_data(DATA_PATH, Config.trim)
 
+# x = one_hot(torch.tensor(x).to(torch.int64), num_classes = 21).cuda()
+# y = torch.tensor(y).cuda()
 x = one_hot(torch.tensor(x).to(torch.int64), num_classes = 21)
 y = torch.tensor(y)
+x = x.to(torch.float)
+y = y.to(torch.float)
 
 x_train, x_test, y_train, y_test = train_test_split(
     x, y, test_size=0.2, random_state=42
@@ -25,17 +29,18 @@ x_train, x_test, y_train, y_test = train_test_split(
 
 # Initialisation
 
-model = get_cnn()
+model = Model1()
 
 # model.load_state_dict(torch.load(LOAD_MODEL_PATH))
 
 optimiser = torch.optim.AdamW(model.parameters(), lr=1e-3)
-criterion = nn.BCELoss()
+criterion = nn.functional.cross_entropy
 
-model.to(device)
-x_train.to(device)
-y_train.to(device)
-criterion.to(device)
+
+# model.to(device)
+# x_train.to(device)
+# y_train.to(device)
+# criterion.to(device)
 
 # Training
 
@@ -43,7 +48,7 @@ model.train()
 for e in range(Config.num_epochs):
     for i in range(0, x_train.size(0), Config.batch_size):
         optimiser.zero_grad()
-        output = model(x_train[i : i + Config.batch_size])
+        output = model(x_train[i : i + Config.batch_size]).squeeze()
         loss = criterion(output, y_train[i : i + Config.batch_size])
         loss.backward()
         optimiser.step()
