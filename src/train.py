@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from sklearn.model_selection import train_test_split
-from torch.nn.functional import one_hot
 
 from model import Model1
 from data import load_data
@@ -16,10 +16,8 @@ global_step = 0
 
 y, x = load_data(DATA_PATH, Config.trim)
 
-x = one_hot(torch.tensor(x).to(torch.int64), num_classes = 21).cuda()
-y = torch.tensor(y).cuda()
-# x = one_hot(torch.tensor(x).to(torch.int64), num_classes = 21)
-# y = torch.tensor(y)
+x = F.one_hot(torch.tensor(x).to(torch.int64), num_classes=21)
+y = torch.tensor(y)
 x = x.to(torch.float)
 y = y.to(torch.float)
 
@@ -34,7 +32,7 @@ model = Model1()
 # model.load_state_dict(torch.load(LOAD_MODEL_PATH))
 
 optimiser = torch.optim.AdamW(model.parameters(), lr=1e-3)
-criterion = nn.functional.cross_entropy
+criterion = F.cross_entropy
 
 model.to(device)
 x_train.to(device)
