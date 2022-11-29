@@ -16,8 +16,13 @@ global_step = 0
 
 y, x = load_data(DATA_PATH, Config.trim)
 
-x = F.one_hot(torch.tensor(x).to(torch.int64), num_classes=21)
-y = torch.tensor(y)
+if torch.cuda.is_available():
+    x = F.one_hot(torch.tensor(x).to(torch.int64), num_classes=21).cuda()
+    y = torch.tensor(y).cuda()
+else:
+    x = F.one_hot(torch.tensor(x).to(torch.int64), num_classes=21)
+    y = torch.tensor(y)
+
 x = x.to(torch.float)
 y = y.to(torch.float)
 
