@@ -19,7 +19,7 @@ class Model1(nn.Module):
         self.f = nn.Flatten()
         self.fc1 = nn.Linear(124, 124)
         self.fc2 = nn.Linear(124, 124)
-        self.fc3 = nn.Linear(124, 1)
+        self.fc3 = nn.Linear(124, 2)
 
     def forward(self, Z):
         Z = self.c1(Z)
