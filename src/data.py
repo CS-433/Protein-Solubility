@@ -27,4 +27,3 @@ def load_data(data_path, trim_length):
     x = np.stack(df.fasta.map(
         lambda st: string_to_ints(st, trim_length)).values)
     return (y, x)
-
