@@ -47,5 +47,5 @@ def string_to_ints(s, l):
 def load_data(data_path, trim_length):
     df = read_csv(data_path)
     y = df.solubility.values
-    x = np.stack(df.fasta.map(lambda st: string_to_ints(st, trim_length)).values)
+    x = np.stack(df.fasta.map(lambda s: string_to_ints(s, trim_length)).values)
     return y, x
