@@ -29,12 +29,12 @@ x_train, x_test, y_train, y_test = train_test_split(
 
 # Initialisation
 
-model = model.to(device)
+model.to(device)
 # Load pretrained weights
 # model.load_state_dict(torch.load(LOAD_MODEL_PATH))
 
 optimiser = torch.optim.AdamW(model.params(), lr=1e-3)
-criterion = nn.BCEWithLogitsLoss()
+criterion = nn.BCEWithLogitsLoss().to(device)
 
 # Training
 

@@ -44,8 +44,8 @@ optimiser = torch.optim.AdamW(model.parameters(), lr=1e-3)
 # Use nn, not F
 criterion = F.cross_entropy
 
-# .to is not inplace
 model.to(device)
+# .to is not inplace for tensors
 x_train.to(device)
 y_train.to(device)
 
