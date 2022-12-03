@@ -1,6 +1,7 @@
 import numpy as np
 from pandas import read_csv
-
+import torch
+import torch.nn.functional as F
 
 class Encoding:
     """Encoding of FASTA characters to integers. Encoding starts at 1."""
@@ -48,4 +49,15 @@ def load_data(data_path, trim_length):
     df = read_csv(data_path)
     y = df.solubility.values
     x = np.stack(df.fasta.map(lambda s: string_to_ints(s, trim_length)).values)
+
     return y, x
+
+def encode_data(y, x, trim_length):
+    y, x = torch.tensor(y), torch.tensor(x)
+    x = F.one_hot(x.to(torch.int64))
+    
+    x_t = torch.zeros(y.size()[0], len(Encoding.residues), trim_length)
+    for i in range(y.size()[0]):
+        x_t[i] = x[i].T
+
+    return y, x_t
