@@ -1,9 +1,19 @@
 import torch.nn as nn
 
-from config import model_config
+from config import config, model_config
+
+
+class PrintLayer(nn.Module):
+    def __init__(self):
+        super().__init__()
+
+    def forward(self, x):
+        print(x.shape)
+        return x
 
 
 model = nn.Sequential(
     *sum([[nn.Conv1d(*sizes), nn.SiLU()] for sizes in model_config["cnn"]], []),
+    nn.Flatten(),
     nn.Linear(*model_config["clf"])
 )
