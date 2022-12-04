@@ -1,8 +1,8 @@
 config = {
     "max_chain_length": 500,
-    "num_epochs": 1000,
-    "eval_step": 100,
-    "batch_size": 20,
+    "num_epochs": 100,
+    "eval_step": 10,
+    "batch_size": 200,
 }
 
 model_config = {

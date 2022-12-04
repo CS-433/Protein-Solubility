@@ -53,16 +53,16 @@ for e in range(config["num_epochs"]):
                 train_loss += criterion(
                     output, y_train[i : i + config["batch_size"]].float()
                 )
+            train_loss /= x_train.shape[0]
 
             for i in range(0, x_test.shape[0], config["batch_size"]):
                 output = model(x_test[i : i + config["batch_size"]]).squeeze()
                 test_loss += criterion(
                     output, y_test[i : i + config["batch_size"]].float()
                 )
+            test_loss /= x_test.shape[0]
 
-        print(
-            f"Epoch {e + 1} - Train loss: {train_loss / y_train.shape[0]}, Test loss: {test_loss / y_test.shape[0]}"
-        )
+        print(f"Epoch {e + 1} - Train loss: {train_loss}, Test loss: {test_loss}")
         model.train()
 
         torch.save(model.state_dict(), SAVE_MODEL_PATH + "_" + str(e))
