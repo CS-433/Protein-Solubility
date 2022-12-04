@@ -65,4 +65,4 @@ for e in range(config["num_epochs"]):
         print(f"Epoch {e + 1} - Train loss: {train_loss}, Test loss: {test_loss}")
         model.train()
 
-        torch.save(model.state_dict(), SAVE_MODEL_PATH + "_" + str(e))
+        torch.save(model.state_dict(), SAVE_MODEL_PATH + "cnn_" + str(e + 1))
