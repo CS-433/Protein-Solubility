@@ -1,11 +1,10 @@
 import torch
 import torch.nn as nn
-
 from sklearn.model_selection import train_test_split
 
 from config import config
+from data import encode_data, load_data
 from models import model
-from data import load_data, encode_data
 
 DATA_PATH = "data/PSI_Biology_solubility_trainset.csv"
 SAVE_MODEL_PATH = "../models/"
@@ -17,16 +16,11 @@ global_step = 0
 # Load data
 # x.size() should be equal to [num_samples, 20 (num channels), 500 (length of sequences)]
 # y is an array of labels
-y, x = load_data(DATA_PATH, config['max_chain_length'])
-y, x = encode_data(y, x, config['max_chain_length'])
+y, x = load_data(DATA_PATH, config["max_chain_length"])
+y, x = encode_data(y, x, config["max_chain_length"])
 
-# move data to GPU
-# x = x.to(device)
-# y = y.to(device)
-
-if device == torch.device('cuda'):
-    x = x.to(device)
-    y = y.to(device)
+x = x.to(device)
+y = y.to(device)
 
 x_train, x_test, y_train, y_test = train_test_split(
     x, y, test_size=0.2, random_state=42
