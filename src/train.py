@@ -32,7 +32,7 @@ model.to(device)
 # Load pretrained weights
 # model.load_state_dict(torch.load(LOAD_MODEL_PATH))
 
-optimiser = torch.optim.AdamW(model.params(), lr=1e-3)
+optimiser = torch.optim.AdamW(model.parameters(), lr=1e-3)
 criterion = nn.BCEWithLogitsLoss().to(device)
 
 # Training
