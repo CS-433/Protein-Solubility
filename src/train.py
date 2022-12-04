@@ -11,11 +11,8 @@ SAVE_MODEL_PATH = "./models/"
 LOAD_MODEL_PATH = "./model.pth"
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-global_step = 0
 
 # Load data
-# x.shape should be equal to [num_samples, 20 (num channels), 500 (length of sequences)]
-# y is an array of labels
 y, x = load_data(DATA_PATH, config["max_chain_length"])
 y, x = encode_data(y, x, config["max_chain_length"])
 
@@ -45,10 +42,9 @@ for e in range(config["num_epochs"]):
         loss = criterion(output, y_train[i : i + config["batch_size"]].float())
         loss.backward()
         optimiser.step()
-        global_step += 1
 
     # Evaluation
-    if global_step % config["eval_step"] == 0:
+    if e % config["eval_step"] == config["eval_step"] - 1:
         model.eval()
         train_loss, test_loss = 0, 0
         with torch.no_grad():
