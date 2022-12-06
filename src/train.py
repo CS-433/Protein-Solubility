@@ -6,6 +6,7 @@ from config import config
 from data import encode_data, load_data
 from models import model
 
+
 DATA_PATH = "./data/PSI_Biology_solubility_trainset.csv"
 SAVE_MODEL_PATH = "./models/"
 LOAD_MODEL_PATH = "./model.pth"
@@ -46,8 +47,9 @@ for e in range(config["num_epochs"]):
     # Evaluation
     if e % config["eval_step"] == config["eval_step"] - 1:
         model.eval()
-        train_loss, test_loss = 0, 0
+        train_loss, test_loss, acc = 0, 0, 0
         with torch.no_grad():
+            # Train loss
             for i in range(0, x_train.shape[0], config["batch_size"]):
                 output = model(x_train[i : i + config["batch_size"]]).squeeze()
                 train_loss += criterion(
@@ -55,6 +57,7 @@ for e in range(config["num_epochs"]):
                 )
             train_loss /= x_train.shape[0]
 
+            # Test loss
             for i in range(0, x_test.shape[0], config["batch_size"]):
                 output = model(x_test[i : i + config["batch_size"]]).squeeze()
                 test_loss += criterion(
@@ -62,7 +65,14 @@ for e in range(config["num_epochs"]):
                 )
             test_loss /= x_test.shape[0]
 
-        print(f"Epoch {e + 1} - Train loss: {train_loss}, Test loss: {test_loss}")
+            # Accuracy
+            output = model(x_test).squeeze().round()
+            acc = (output == y_test).float().mean().item()
+
+        print(
+            f"Epoch {e + 1} - Train loss: {train_loss:.4f}, Test loss: {test_loss:.4f}, Accuracy: {acc:.2f}"
+        )
+
         model.train()
 
         torch.save(model.state_dict(), SAVE_MODEL_PATH + "cnn_" + str(e + 1))

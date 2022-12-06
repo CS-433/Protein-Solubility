@@ -1,7 +1,7 @@
 config = {
     "max_chain_length": 500,
-    "num_epochs": 100,
-    "eval_step": 10,
+    "num_epochs": 10,
+    "eval_step": 1,
     "batch_size": 200,
 }
 
