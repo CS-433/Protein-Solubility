@@ -66,11 +66,15 @@ for e in range(config["num_epochs"]):
             test_loss /= x_test.shape[0]
 
             # Accuracy
-            output = model(x_test).squeeze().round()
-            acc = (output == y_test).float().mean().item()
+            output_te = model(x_test).squeeze().round()
+            acc_te = (output_te == y_test).float().mean().item()
+
+            output_tr = model(x_train).squeeze().round()
+            acc_tr = (output_tr == y_train).float().mean().item()
 
         print(
-            f"Epoch {e + 1} - Train loss: {train_loss:.4f}, Test loss: {test_loss:.4f}, Accuracy: {acc:.2f}"
+            f"Epoch {e + 1} - Train loss: {train_loss:.4f}, Accuracy:{acc_tr:.2f};\
+            Test loss: {test_loss:.4f}, Accuracy: {acc_te:.2f}"
         )
 
         model.train()
