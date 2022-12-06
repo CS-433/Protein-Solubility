@@ -1,8 +1,8 @@
 config = {
     "max_chain_length": 500,
-    "num_epochs": 10,
+    "num_epochs": 100,
     "eval_step": 1,
-    "batch_size": 200,
+    "batch_size": 32,
 }
 
 model_config = {
@@ -13,4 +13,5 @@ model_config = {
         [8, 4, 5, 1, 2],
     ],
     "clf": [config["max_chain_length"] * 4, 1],
+    "dropout_p": 0.3
 }

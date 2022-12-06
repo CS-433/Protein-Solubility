@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from config import config
 from data import encode_data, load_data
 from models import model
+from scores import scores
 
 
 DATA_PATH = "./data/PSI_Biology_solubility_trainset.csv"
@@ -31,7 +32,7 @@ model.to(device)
 # model.load_state_dict(torch.load(LOAD_MODEL_PATH))
 
 optimiser = torch.optim.AdamW(model.parameters(), lr=1e-3)
-criterion = nn.BCEWithLogitsLoss().to(device)
+criterion = nn.BCEWithLogitsLoss(pos_weight=torch.tensor(0.5)).to(device)
 
 # Training
 
@@ -66,15 +67,13 @@ for e in range(config["num_epochs"]):
             test_loss /= x_test.shape[0]
 
             # Accuracy
-            output_te = model(x_test).squeeze().round()
-            acc_te = (output_te == y_test).float().mean().item()
-
-            output_tr = model(x_train).squeeze().round()
-            acc_tr = (output_tr == y_train).float().mean().item()
+            y_pred = model(x_test).squeeze()
+            (acc, prec, rec, pred_std) = scores(y_pred, y_test)
 
         print(
-            f"Epoch {e + 1} - Train loss: {train_loss:.4f}, Accuracy:{acc_tr:.2f};\
-            Test loss: {test_loss:.4f}, Accuracy: {acc_te:.2f}"
+            f"""Epoch {e + 1} - Train loss: {train_loss:.4f}; 
+            Test loss: {test_loss:.4f}, Accuracy: {acc:.2f}, 
+            Precision: {prec:.2f}, Recall: {rec:.2f}, Pred. STD: {pred_std:.2f}"""
         )
 
         model.train()
