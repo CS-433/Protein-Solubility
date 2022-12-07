@@ -1,7 +1,8 @@
 import torch
 
 def confusion_matrix(y_pred, y):
-    y_pred = (y_pred > 0).long()
+    y = y.float()
+    y_pred = (y_pred > 0).float()
     tp = y_pred.dot(y)
     tn = (1 - y_pred).dot(1 - y)
     fp = y_pred.dot(1 - y)
