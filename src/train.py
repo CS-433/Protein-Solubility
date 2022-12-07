@@ -51,29 +51,27 @@ for e in range(config["num_epochs"]):
         train_loss, test_loss, acc = 0, 0, 0
         with torch.no_grad():
             # Train loss
-            for i in range(0, x_train.shape[0], config["batch_size"]):
-                output = model(x_train[i : i + config["batch_size"]]).squeeze()
-                train_loss += criterion(
-                    output, y_train[i : i + config["batch_size"]].float()
-                )
-            train_loss /= x_train.shape[0]
+            #for i in range(0, x_train.shape[0], config["batch_size"]):
+            #    output = model(x_train[i : i + config["batch_size"]]).squeeze()
+            #    train_loss += criterion(
+            #        output, y_train[i : i + config["batch_size"]].float()
+            #    )
+            #train_loss /= x_train.shape[0]
+            output = model(x_train).squeeze()
+            train_loss = criterion(output, y_train.float())
 
             # Test loss
-            for i in range(0, x_test.shape[0], config["batch_size"]):
-                output = model(x_test[i : i + config["batch_size"]]).squeeze()
-                test_loss += criterion(
-                    output, y_test[i : i + config["batch_size"]].float()
-                )
-            test_loss /= x_test.shape[0]
+            output = model(x_test).squeeze()
+            test_loss = criterion(output, y_test.float())
 
             # Accuracy
             y_pred = model(x_test).squeeze()
             (acc, prec, rec, pred_std) = scores(y_pred, y_test)
 
         print(
-            f"""Epoch {e + 1} - Train loss: {train_loss:.4f}; 
-            Test loss: {test_loss:.4f}, Accuracy: {acc:.2f}, 
-            Precision: {prec:.2f}, Recall: {rec:.2f}, Pred. STD: {pred_std:.2f}"""
+            f"""Epoch {e + 1} - Train loss: {train_loss:.3f}; 
+            Test loss: {test_loss:.3f}, Accuracy: {acc:.3f}, 
+            Precision: {prec:.3f}, Recall: {rec:.3f}, Pred. STD: {pred_std:.3f}"""
         )
 
         model.train()
