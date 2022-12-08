@@ -3,7 +3,7 @@ config = {
     "num_epochs": 1000,
     "eval_step": 10,
     "batch_size": 256,
-    "weight_decay": 5e-1,
+    "weight_decay": 5e-2,
     "learning_rate": 1e-3
 }
 
@@ -20,5 +20,5 @@ model_config = {
         [config["max_chain_length"]*2, config["max_chain_length"], True],
         [config["max_chain_length"], 1, True],
     ],
-    "dropout_p": 0.3
+    "dropout_p": 0.
 }

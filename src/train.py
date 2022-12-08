@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 
 from config import config
 from data import encode_data, load_data
-from models import model, model2
+from models import model, model2, model3
 from scores import scores
 
 
@@ -26,7 +26,7 @@ x_train, x_test, y_train, y_test = train_test_split(
 )
 
 # Initialisation
-model = model2()           #Comment this line for CNN model
+model = model3()           #Comment this line for CNN model
 model.to(device)
 # Load pretrained weights
 # model.load_state_dict(torch.load(LOAD_MODEL_PATH))
