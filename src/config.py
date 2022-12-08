@@ -14,11 +14,12 @@ model_config = {
         [4, 3, 5, 1, 2],
         [3, 2, 5, 1, 2]
     ],
+    # in, out, layers
     "rnn": [600, 300, 3],
     "clf": [
         # in_features, #out_features, bias
         [config["max_chain_length"]*2, config["max_chain_length"], True],
         [config["max_chain_length"], 1, True],
     ],
-    "dropout_p": 0.
+    "dropout_p": 0.2
 }
