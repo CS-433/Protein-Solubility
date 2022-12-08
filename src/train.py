@@ -31,8 +31,12 @@ model.to(device)
 # Load pretrained weights
 # model.load_state_dict(torch.load(LOAD_MODEL_PATH))
 
-optimiser = torch.optim.AdamW(model.parameters(), lr=config["lr"], weight_decay=config["L2_reg"])
-criterion = nn.BCEWithLogitsLoss(pos_weight=torch.tensor(0.5)).to(device)
+optimiser = torch.optim.AdamW(model.parameters(), lr=config["learning_rate"], weight_decay=config["weight_decay"])
+
+# Set pos_weight w.r.t. distribution of y's
+pos_weight = (y==0).sum()/y.sum()
+#print(f"Positive sample weight: {pos_weight:.2f}")
+criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight).to(device)
 
 # Training
 
@@ -61,11 +65,8 @@ for e in range(config["num_epochs"]):
             train_loss = criterion(output, y_train.float())
 
             # Test loss
-            output = model(x_test).squeeze()
-            test_loss = criterion(output, y_test.float())
-
-            # Accuracy
             y_pred = model(x_test).squeeze()
+            test_loss = criterion(y_pred, y_test.float())
             (acc, prec, rec, pred_std) = scores(y_pred, y_test)
 
         print(

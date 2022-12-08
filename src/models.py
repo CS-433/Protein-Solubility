@@ -13,7 +13,7 @@ class PrintLayer(nn.Module):
 
 
 model = nn.Sequential(
-    *sum([[nn.Conv1d(*sizes), nn.Dropout(p=model_config["dropout_p"]), nn.SiLU()] for sizes in model_config["cnn"]], []),
+    *sum([[nn.Conv1d(*sizes), nn.BatchNorm1d(sizes[1]), nn.Dropout(p=model_config["dropout_p"]), nn.SiLU()] for sizes in model_config["cnn"]], []),
     nn.Flatten(),
-    *sum([[nn.Linear(*sizes)] for sizes in model_config["clf"]], [])
+    *sum([[nn.Linear(*sizes), nn.BatchNorm1d(sizes[1]), nn.Dropout(p=model_config["dropout_p"])] for sizes in model_config["clf"]], [])
 )
