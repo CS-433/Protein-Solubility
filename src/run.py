@@ -34,7 +34,7 @@ def main():
     data = init_data(DATA_PATH, device, config)
 
     # Initialisation
-    model = model1()  # Comment this line for CNN model
+    model = model1()
     model.to(device)
 
     # Load pretrained weights
