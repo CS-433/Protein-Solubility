@@ -2,42 +2,39 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 from pandas import read_csv
+from sklearn.model_selection import train_test_split
 
+# Encoding of FASTA characters to integers. Encoding starts at 1.
+residues = [
+    "A",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "K",
+    "L",
+    "M",
+    "N",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "V",
+    "W",
+    "Y",
+]
 
-class Encoding:
-    """Encoding of FASTA characters to integers. Encoding starts at 1."""
-
-    residues = [
-        "",
-        "A",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G",
-        "H",
-        "I",
-        "K",
-        "L",
-        "M",
-        "N",
-        "P",
-        "Q",
-        "R",
-        "S",
-        "T",
-        "V",
-        "W",
-        "Y",
-    ]
-
-    mapping = dict(zip(residues, range(len(residues))))
+mapping = dict(zip(residues, range(1, len(residues) + 1)))
 
 
 def string_to_ints(s, l):
     """Build a list of integers from a string which is then trimmed or padded with 0 to have length `l`."""
 
-    a = [*map(Encoding.mapping.get, s)]
+    a = [*map(mapping.get, s)]
     n = len(a)
     if n < l:
         a += [0] * (l - n)
@@ -46,21 +43,30 @@ def string_to_ints(s, l):
     return np.array(a)
 
 
-def load_data(data_path, trim_length):
+def load_data(data_path, device, trim_length):
     df = read_csv(data_path)
     y = df.solubility.values
     x = np.stack(df.fasta.map(lambda s: string_to_ints(s, trim_length)).values)
+    ty = torch.tensor(y).to(device)
+    tx = torch.tensor(x).to(device)
+    return ty, tx
 
-    return y, x
+
+def encode_one_hot(y, x, trim_length):
+    x = F.one_hot(x.to(torch.int64)).permute(0, 2, 1).float()
+
+    return y, x[:, 1:, :]
 
 
-def encode_data(y, x, trim_length):
-    y, x = torch.tensor(y), torch.tensor(x)
-    x = F.one_hot(x.to(torch.int64))
+def init_data(data_path, device, config):
+    y, x = load_data(data_path, device, config["max_chain_length"])
+    y, x = encode_one_hot(y, x, config["max_chain_length"])
 
-    x_t = torch.zeros(y.shape[0], len(Encoding.residues), trim_length)
-    for i in range(y.shape[0]):
-        x_t[i] = x[i].T
+    d = {}
+    d["x_train"], d["x_test"], d["y_train"], d["y_test"] = train_test_split(
+        x, y, test_size=0.2
+    )
 
-    return y, x_t[:, 1:, :]
+    d["neg_pos_ratio"] = (y == 0).sum() / y.sum()
 
+    return d
