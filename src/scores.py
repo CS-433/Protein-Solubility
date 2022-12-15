@@ -1,4 +1,5 @@
 import torch
+from sklearn.metrics import roc_auc_score
 
 def confusion_matrix(y_pred, y):
     y = y.float()
@@ -12,8 +13,11 @@ def confusion_matrix(y_pred, y):
 
 def scores(y_pred, y):
     tp, tn, fp, fn = confusion_matrix(y_pred, y)
-    accuracy = (tn + tp) / len(y)
-    precision = tp / (tn + tp)
-    recall = tp / (tp + fp)
-    pred_std = torch.std(torch.sigmoid(y_pred))
-    return (accuracy, precision, recall, pred_std)
+    s = {}
+    s["accuracy"] = (tn + tp) / len(y)
+    s["precision"] = tp / (tn + tp)
+    s["recall"] = tp / (tp + fp)
+    s["f1"] = tp / (tp + 0.5*(fp + fn))
+    s["pred_std"] = torch.std(torch.sigmoid(y_pred))
+    s["roc_auc"] = roc_auc_score(y, y_pred)
+    return s

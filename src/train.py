@@ -67,12 +67,13 @@ for e in range(config["num_epochs"]):
             # Test loss
             y_pred = model(x_test).squeeze()
             test_loss = criterion(y_pred, y_test.float())
-            (acc, prec, rec, pred_std) = scores(y_pred, y_test)
+            s = scores(y_pred, y_test)
 
         print(
-            f"""Epoch {e + 1} - Train loss: {train_loss:.3f}; 
-            Test loss: {test_loss:.3f}, Accuracy: {acc:.3f}, 
-            Precision: {prec:.3f}, Recall: {rec:.3f}, Pred. STD: {pred_std:.3f}"""
+            f"""Epoch {e + 1} - Train loss: {train_loss:.3f};
+            Test loss: {test_loss:.3f}, Accuracy: {s["accuracy"]:.3f},
+            Precision: {s["precision"]:.3f}, Recall: {s["recall"]:.3f},
+            Pred. STD: {s["pred_std"]:.3f}, F1: {s["f1"]:.3f}, ROC AUC: {s["roc_auc"]}"""
         )
 
         model.train()
