@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Don't push vim swap files
+.swp
+
+# Don't push models
 models/
 
 # C extensions
