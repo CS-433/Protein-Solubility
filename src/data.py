@@ -52,15 +52,15 @@ def load_data(data_path, device, trim_length):
     return ty, tx
 
 
-def encode_one_hot(y, x, trim_length):
+def encode_one_hot(x):
     x = F.one_hot(x.to(torch.int64)).permute(0, 2, 1).float()
 
-    return y, x[:, 1:, :]
+    return x[:, 1:, :]
 
 
 def init_data(data_path, device, config):
     y, x = load_data(data_path, device, config["max_chain_length"])
-    y, x = encode_one_hot(y, x, config["max_chain_length"])
+    x = encode_one_hot(x)
 
     d = {}
     d["x_train"], d["x_test"], d["y_train"], d["y_test"] = train_test_split(
