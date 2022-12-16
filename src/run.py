@@ -34,7 +34,7 @@ def main():
     data = init_data(DATA_PATH, device, config)
 
     # Initialisation
-    model = model1()
+    model = Model2()
     model.to(device)
 
     # Load pretrained weights
@@ -58,9 +58,7 @@ def main():
             eval_model(e, data, model, optimiser, criterion)
 
             model.train()
-            torch.save(
-                model.state_dict(), SAVE_MODEL_DIR + SAVE_MODEL_PREFIX + str(e)
-            )
+            torch.save(model.state_dict(), SAVE_MODEL_DIR + SAVE_MODEL_PREFIX + str(e))
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 class Config:
     params = {
-        "max_chain_length": 786, # longest sequence in dataset
+        "max_chain_length": 786,  # longest sequence in dataset
         "num_epochs": 1000,
         "eval_step": 10,
         "batch_size": 32,
@@ -27,7 +27,7 @@ class Config:
             [4, 3, 5, 0.2],
             [3, 2, 5, 0.2],
         ],
-        # in, out, layers
-        "rnn": [params["max_chain_length"], 300, 3],
+        # input_size, hidden_size, num_layers
+        "rnn": [2, 5, 3],
         "dropout_p": 0.2
     }
