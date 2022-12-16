@@ -59,7 +59,7 @@ def main():
 
             model.train()
             torch.save(
-                model.state_dict(), SAVE_MODEL_DIR + SAVE_MODEL_PREFIX + str(e + 1)
+                model.state_dict(), SAVE_MODEL_DIR + SAVE_MODEL_PREFIX + str(e)
             )
 
 
