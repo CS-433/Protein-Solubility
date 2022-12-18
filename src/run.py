@@ -2,6 +2,7 @@ import random
 
 import numpy
 import torch
+import torch.nn as nn
 
 from config import Config
 from data import init_data
