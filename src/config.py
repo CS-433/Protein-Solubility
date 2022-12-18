@@ -29,5 +29,5 @@ class Config:
         ],
         # input_size, hidden_size, num_layers
         "rnn": [2, 5, 3],
-        "dropout_p": 0.2
+        "dropout_p": 0.2,
     }

@@ -1,6 +1,7 @@
-import torch
 import random
+
 import numpy
+import torch
 
 from config import Config
 from data import init_data

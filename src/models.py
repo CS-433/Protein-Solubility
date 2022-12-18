@@ -7,13 +7,9 @@ class Model1(nn.Module):
     def __init__(self, params=Config.model1):
         super().__init__()
 
-        self.cnn = nn.Sequential(
-            *[ConvBlock(*param) for param in params["cnn"]]
-        )
+        self.cnn = nn.Sequential(*[ConvBlock(*param) for param in params["cnn"]])
         self.flatten = nn.Flatten()
-        self.nn = nn.Sequential(
-            *[LinearBlock(*param) for param in params["linear"]],
-        )
+        self.nn = nn.Sequential(*[LinearBlock(*param) for param in params["linear"]],)
         self.fc = nn.Linear(params["linear"][-1][1], 1)
 
     def forward(self, x):
@@ -24,21 +20,20 @@ class Model1(nn.Module):
 
         return x
 
+
 class Model2(nn.Module):
     def __init__(self, params=Config.model2):
         super().__init__()
 
-        self.cnn = nn.Sequential(
-            *[ConvBlock(*param) for param in params["cnn"]]
-        )
+        self.cnn = nn.Sequential(*[ConvBlock(*param) for param in params["cnn"]])
 
         self.flatten = nn.Flatten()
         self.rnn = nn.GRU(*params["rnn"], batch_first=True)
-        self.fc = nn.Linear(params["rnn"][1]*Config.params["max_chain_length"], 1)
+        self.fc = nn.Linear(params["rnn"][1] * Config.params["max_chain_length"], 1)
 
     def forward(self, x):
         x = self.cnn(x)
-        
+
         # Get x to be the correct shape
         x = x.permute(0, 2, 1)
         x, h = self.rnn(x)
@@ -46,7 +41,7 @@ class Model2(nn.Module):
         x = self.fc(x)
 
         return x
-        
+
 
 def model2(params=Config.model2):
     return nn.Sequential(
