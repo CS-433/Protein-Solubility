@@ -42,19 +42,6 @@ class Model2(nn.Module):
 
         return x
 
-
-def model2(params=Config.model2):
-    return nn.Sequential(
-        *[ConvBlock(*param) for param in params["cnn"]],
-        nn.GRU(*params["rnn"], batch_first=True),
-        SelectItem(0),
-        nn.Dropout(p=params["dropout_p"]),
-        nn.SiLU(),
-        nn.Flatten(),
-        nn.Linear(params["rnn"][1] * params["cnn"][-1][1], 1),
-    )
-
-
 class PrintLayer(nn.Module):
     def __init__(self):
         super().__init__()
