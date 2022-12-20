@@ -67,8 +67,8 @@ def encode_one_hot(x):
     return x[:, 1:, :]
 
 
-def init_data(data_path, device, config):
-    y, x = load_data(data_path, device, config["max_chain_length"])
+def init_data(data_path, device, trim_length):
+    y, x = load_data(data_path, device, trim_length)
     x = encode_one_hot(x)
 
     d = {}

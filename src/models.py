@@ -2,7 +2,7 @@ import torch.nn as nn
 
 from config import Config
 
-
+# CNN -> NN
 class Model1(nn.Module):
     def __init__(self, params=Config.model1):
         super().__init__()
@@ -20,7 +20,7 @@ class Model1(nn.Module):
 
         return x
 
-
+# CNN -> RNN -> NN
 class Model2(nn.Module):
     def __init__(self, params=Config.model2):
         super().__init__()
@@ -42,15 +42,7 @@ class Model2(nn.Module):
 
         return x
 
-class PrintLayer(nn.Module):
-    def __init__(self):
-        super().__init__()
-
-    def forward(self, x):
-        print(x.shape)
-        return x
-
-
+# For chaining GRU in a sequence
 class SelectItem(nn.Module):
     def __init__(self, index):
         super().__init__()
@@ -59,7 +51,7 @@ class SelectItem(nn.Module):
     def forward(self, inputs):
         return inputs[self.index]
 
-
+# Convolution layer + Normalization + Dropout + Non-linearity
 class ConvBlock(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, dropout_p=0):
         super().__init__()
@@ -85,7 +77,7 @@ class ConvBlock(nn.Module):
 
         return x
 
-
+# Fully-Connected + Normalization + Dropout + Non-Linearity
 class LinearBlock(nn.Module):
     def __init__(self, in_features, out_features, dropout_p=0):
         super().__init__()

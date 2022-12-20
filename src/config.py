@@ -1,13 +1,14 @@
 class Config:
     params = {
-        "max_chain_length": 786,  # longest sequence in dataset
-        "num_epochs": 1000,
-        "eval_step": 10,
+        "max_chain_length": 786,  # Sequence trim length
+        "num_epochs": 1000, # Number of iterations
+        "eval_step": 10, # Evaluate model each ... iters
         "batch_size": 32,
         "weight_decay": 1e-2,
         "learning_rate": 1e-3,
     }
 
+    # Model 1: CNN + NN
     model1 = {
         "cnn": [
             # in_channels, out_channels, kernel_size, dropout_p
@@ -20,6 +21,7 @@ class Config:
         ],
     }
 
+    # Model 2: CNN + RNN + NN
     model2 = {
         "cnn": [
             # in_channels, out_channels, kernel_size, dropout_p

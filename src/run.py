@@ -11,6 +11,8 @@ from train import *
 
 
 def setup_seed(seed):
+    """ Set all seeds to ensure reproducibility """
+
     random.seed(seed)
     numpy.random.seed(seed)
     torch.manual_seed(seed)
@@ -20,7 +22,6 @@ def setup_seed(seed):
 
 
 def main():
-    # Ensure reproducibility
     setup_seed(42)
 
     DATA_PATH = "./data/PSI_Biology_solubility_trainset.csv"
@@ -33,7 +34,7 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # Load data
-    data = init_data(DATA_PATH, device, config)
+    data = init_data(DATA_PATH, device, config["max_chain_length"])
 
     # Initialisation
     model = Model2()
