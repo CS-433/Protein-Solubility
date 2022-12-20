@@ -4,7 +4,7 @@ class Config:
         "num_epochs": 1000,
         "eval_step": 10,
         "batch_size": 32,
-        "weight_decay": 5e-2,
+        "weight_decay": 1e-2,
         "learning_rate": 1e-3,
     }
 
@@ -23,11 +23,10 @@ class Config:
     model2 = {
         "cnn": [
             # in_channels, out_channels, kernel_size, dropout_p
-            [20, 4, 5, 0.2],
+            [20, 4, 7, 0.2],
             [4, 3, 5, 0.2],
-            [3, 2, 5, 0.2],
+            [3, 1, 5, 0.2],
         ],
         # input_size, hidden_size, num_layers
-        "rnn": [2, 5, 3],
-        "dropout_p": 0.2,
+        "rnn": [1, 2, 3],
     }

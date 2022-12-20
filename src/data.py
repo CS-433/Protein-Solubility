@@ -31,22 +31,31 @@ residues = [
 mapping = dict(zip(residues, range(1, len(residues) + 1)))
 
 
-def string_to_ints(s, l):
+def string_to_ints(s, l, padding='post'):
     """Build a list of integers from a string which is then trimmed or padded with 0 to have length `l`."""
 
     a = [*map(mapping.get, s)]
     n = len(a)
+
     if n < l:
-        a += [0] * (l - n)
+        if padding == 'pre':
+            a = [0] * ((l - n)) + a
+        elif padding == 'mid':
+            a = [0] * ((l - n) // 2) + a + [0] * ((l - n) // 2)
+            if len(a) < l: #odd length case
+                a += [0]
+        elif padding == 'post':
+            a += [0] * ((l - n))
     else:
         a = a[:l]
+        
     return np.array(a)
 
 
 def load_data(data_path, device, trim_length):
     df = read_csv(data_path)
     y = df.solubility.values
-    x = np.stack(df.fasta.map(lambda s: string_to_ints(s, trim_length)).values)
+    x = np.stack(df.fasta.map(lambda s: string_to_ints(s, trim_length, 'mid')).values)
     ty = torch.tensor(y).to(device)
     tx = torch.tensor(x).to(device)
     return ty, tx
