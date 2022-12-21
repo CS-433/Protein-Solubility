@@ -37,7 +37,7 @@ def main():
     data = init_data(DATA_PATH, device, config["max_chain_length"])
 
     # Initialisation
-    model = Model2()
+    model = Model3()
     model.to(device)
 
     # Load pretrained weights

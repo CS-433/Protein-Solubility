@@ -42,6 +42,45 @@ class Model2(nn.Module):
 
         return x
 
+# CNN -> NN
+class Model3(nn.Module):
+    def __init__(self, params=Config.model3):
+        super().__init__()
+
+        self.embed = EmbedLayer(*params["embed"])
+        self.cnn = nn.Sequential(*[ConvBlock(*param) for param in params["cnn"]])
+        self.flatten = nn.Flatten()
+        self.nn = nn.Sequential(*[LinearBlock(*param) for param in params["linear"]],)
+        self.fc = nn.Linear(params["linear"][-1][1], 1)
+
+    def forward(self, x):
+        x = self.embed(x)
+        x = self.cnn(x)
+        x = self.flatten(x)
+        x = self.nn(x)
+        x = self.fc(x)
+
+        return x
+
+# Embed residues into lower dimensional space
+class EmbedLayer(nn.Module):
+    def __init__(self, dim_in, dim_out):
+        super().__init__()
+
+        self.dim_in = dim_in
+        self.dim_out = dim_out
+        self.linear = nn.Linear(self.dim_in, self.dim_out)
+
+    def forward(self, x):
+        seq_len = x.shape[2]
+
+        x = x.permute(0, 2, 1).reshape(-1, self.dim_in)
+        x = self.linear(x)
+        x = x.reshape(-1, seq_len, self.dim_out).permute(0, 2, 1)
+
+        return x
+
+
 # For chaining GRU in a sequence
 class SelectItem(nn.Module):
     def __init__(self, index):

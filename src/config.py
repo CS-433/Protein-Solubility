@@ -32,3 +32,18 @@ class Config:
         # input_size, hidden_size, num_layers
         "rnn": [1, 2, 3],
     }
+
+    # Model 2: EMBED + CNN + NN
+    model3 = {
+        "embed": [20, 2],
+        "cnn": [
+            # in_channels, out_channels, kernel_size, dropout_p
+            [2, 2, 3, 0.2],
+            [2, 2, 3, 0.2],
+            [2, 2, 3, 0.2],
+        ],
+        "linear": [
+            # in_features, #out_features, dropout_p
+            [params["max_chain_length"] * 2, params["max_chain_length"], 0.2],
+        ],
+    }
