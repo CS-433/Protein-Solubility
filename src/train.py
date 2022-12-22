@@ -2,6 +2,7 @@ import torch
 
 from scores import print_scores
 
+
 # Train model with training data (single epoch)
 def train_epoch(data, model, optimiser, criterion, batch_size):
     model.train()
@@ -11,6 +12,7 @@ def train_epoch(data, model, optimiser, criterion, batch_size):
         loss = criterion(output, data["y_train"][i : i + batch_size].float())
         loss.backward()
         optimiser.step()
+
 
 # Evaluate model performance on test data
 def eval_model(epoch, data, model, optimiser, criterion):

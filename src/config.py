@@ -1,8 +1,8 @@
 class Config:
     params = {
         "max_chain_length": 810,  # Sequence trim length
-        "num_epochs": 1000, # Number of iterations
-        "eval_step": 10, # Evaluate model each ... iters
+        "num_epochs": 1000,  # Number of iterations
+        "eval_step": 10,  # Evaluate model each ... iters
         "batch_size": 32,
         "weight_decay": 1e-2,
         "learning_rate": 1e-3,
@@ -18,7 +18,7 @@ class Config:
         ],
         "linear": [
             # in_features, #out_features, dropout_p
-            [params["max_chain_length"], params["max_chain_length"]//2, 0.25],
+            [params["max_chain_length"], params["max_chain_length"] // 2, 0.25],
         ],
     }
 

@@ -2,6 +2,7 @@ import torch.nn as nn
 
 from config import Config
 
+
 # CNN -> NN
 class Model1(nn.Module):
     def __init__(self, params=Config.model1):
@@ -19,6 +20,7 @@ class Model1(nn.Module):
         x = self.fc(x)
 
         return x
+
 
 # CNN -> RNN -> NN
 class Model2(nn.Module):
@@ -42,6 +44,7 @@ class Model2(nn.Module):
 
         return x
 
+
 # CNN -> NN
 class Model3(nn.Module):
     def __init__(self, params=Config.model3):
@@ -61,6 +64,7 @@ class Model3(nn.Module):
         x = self.fc(x)
 
         return x
+
 
 # Embed residues into lower dimensional space
 class EmbedLayer(nn.Module):
@@ -90,7 +94,8 @@ class SelectItem(nn.Module):
     def forward(self, inputs):
         return inputs[self.index]
 
-# Convolution layer + Normalization + Dropout + Non-linearity
+
+# Convolution layer + Normalisation + Dropout + Non-linearity
 class ConvBlock(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, dropout_p=0):
         super().__init__()
@@ -116,7 +121,8 @@ class ConvBlock(nn.Module):
 
         return x
 
-# Fully-Connected + Normalization + Dropout + Non-Linearity
+
+# Fully-Connected + Normalisation + Dropout + Non-Linearity
 class LinearBlock(nn.Module):
     def __init__(self, in_features, out_features, dropout_p=0):
         super().__init__()

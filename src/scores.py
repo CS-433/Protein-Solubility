@@ -4,14 +4,15 @@ from sklearn.metrics import roc_auc_score
 
 def confusion_matrix(y_pred, y):
     y = y.float()
-    y_pred = (y_pred > 0).float() # Prediction is without logistic
+    y_pred = (y_pred > 0).float()  # Prediction is without logistic
 
-    tp = y_pred.dot(y) # True positives
-    tn = (1 - y_pred).dot(1 - y) # True negatives
-    fp = y_pred.dot(1 - y) # False positives
-    fn = (1 - y_pred).dot(y) # False negatives
+    tp = y_pred.dot(y)  # True positives
+    tn = (1 - y_pred).dot(1 - y)  # True negatives
+    fp = y_pred.dot(1 - y)  # False positives
+    fn = (1 - y_pred).dot(y)  # False negatives
 
     return tp, tn, fp, fn
+
 
 def scores(y_pred, y):
     """ Returns a dictionary with scores """
@@ -32,6 +33,7 @@ def print_scores(y_pred, y):
 
     s = scores(y_pred, y)
     display_scores(s)
+
 
 def display_scores(s):
     """ Display scores dictionary """

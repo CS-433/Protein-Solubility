@@ -31,7 +31,7 @@ def main():
 
     config = Config.params
 
-    device = torch.device("cpu")#torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # Load data
     data = init_data(DATA_PATH, device, config["max_chain_length"])
