@@ -31,6 +31,10 @@ def print_scores(y_pred, y):
     """ Prints scores for given prediction """
 
     s = scores(y_pred, y)
+    display_scores(s)
+
+def display_scores(s):
+    """ Display scores dictionary """
     print(
         "\n".join(
             [
