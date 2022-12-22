@@ -10,7 +10,9 @@ class Model1(nn.Module):
 
         self.cnn = nn.Sequential(*[ConvBlock(*param) for param in params["cnn"]])
         self.flatten = nn.Flatten()
-        self.nn = nn.Sequential(*[LinearBlock(*param) for param in params["linear"]],)
+        self.nn = nn.Sequential(
+            *[LinearBlock(*param) for param in params["linear"]],
+        )
         self.fc = nn.Linear(params["linear"][-1][1], 1)
 
     def forward(self, x):
@@ -53,7 +55,9 @@ class Model3(nn.Module):
         self.embed = EmbedLayer(*params["embed"])
         self.cnn = nn.Sequential(*[ConvBlock(*param) for param in params["cnn"]])
         self.flatten = nn.Flatten()
-        self.nn = nn.Sequential(*[LinearBlock(*param) for param in params["linear"]],)
+        self.nn = nn.Sequential(
+            *[LinearBlock(*param) for param in params["linear"]],
+        )
         self.fc = nn.Linear(params["linear"][-1][1], 1)
 
     def forward(self, x):
