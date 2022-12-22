@@ -15,7 +15,7 @@ def confusion_matrix(y_pred, y):
 
 
 def scores(y_pred, y):
-    """ Returns a dictionary with scores """
+    """Returns a dictionary with scores"""
 
     tp, tn, fp, fn = confusion_matrix(y_pred, y)
     s = {}
@@ -29,14 +29,14 @@ def scores(y_pred, y):
 
 
 def print_scores(y_pred, y):
-    """ Prints scores for given prediction """
+    """Prints scores for given prediction"""
 
     s = scores(y_pred, y)
     display_scores(s)
 
 
 def display_scores(s):
-    """ Display scores dictionary """
+    """Display scores dictionary"""
     print(
         "\n".join(
             [

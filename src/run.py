@@ -11,7 +11,7 @@ from train import *
 
 
 def setup_seed(seed):
-    """ Set all seeds to ensure reproducibility """
+    """Set all seeds to ensure reproducibility"""
 
     random.seed(seed)
     numpy.random.seed(seed)
