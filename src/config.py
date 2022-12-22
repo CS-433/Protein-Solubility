@@ -1,6 +1,6 @@
 class Config:
     params = {
-        "max_chain_length": 786,  # Sequence trim length
+        "max_chain_length": 810,  # Sequence trim length
         "num_epochs": 1000, # Number of iterations
         "eval_step": 10, # Evaluate model each ... iters
         "batch_size": 32,
@@ -12,12 +12,13 @@ class Config:
     model1 = {
         "cnn": [
             # in_channels, out_channels, kernel_size, dropout_p
-            [20, 2, 3, 0.2],
-            [2, 2, 3, 0.2],
+            [20, 4, 3, 0.25],
+            [4, 2, 3, 0.25],
+            [2, 1, 3, 0.25],
         ],
         "linear": [
             # in_features, #out_features, dropout_p
-            [params["max_chain_length"] * 2, params["max_chain_length"], 0.2],
+            [params["max_chain_length"], params["max_chain_length"]//2, 0.25],
         ],
     }
 
