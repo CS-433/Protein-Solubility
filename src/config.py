@@ -34,7 +34,7 @@ class Config:
         "rnn": [1, 2, 3],
     }
 
-    # Model 2: EMBED + CNN + NN
+    # Model 3: EMBED + CNN + NN
     model3 = {
         "embed": [20, 2],
         "cnn": [
