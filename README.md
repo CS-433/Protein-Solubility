@@ -4,6 +4,8 @@ EPFL Machine Learning Course, Autumn 2022 - Class Project 1
 
 Team members: Lubor Budaj, Matthew Dupraz, Anton Hosgood
 
+[Report](Report.pdf)
+
 This repository contains the code produced during this project. The aim of the project is to create a model that can classify a protein as either soluble or insoluble based only on its FASTA sequence.
 
 ## How To Use
